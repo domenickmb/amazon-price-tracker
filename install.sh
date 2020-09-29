@@ -1,11 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 install () {
 	src="`basename $(pwd)`"
 	if [ `id -u` -eq 0 ]; then
+		# Set the variables for system-wide installation. /opt/$src will be created where the scripts
+		# will reside and a symlink of the main script will be created inside /usr/local/bin directory
 		bin="/usr/local/bin"
 		dst="/opt/${src}"
+
 	else
+		# Set the variables for 'user only' installation. A subdirectory inside ~/bin will be created
+		# where the scripts will reside and a symlink of the main script will be created inside ~/bin
 		bin="${HOME}/bin"
 		dst="${bin}/${src}"
 
