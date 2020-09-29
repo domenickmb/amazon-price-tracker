@@ -8,6 +8,11 @@ install () {
 	else
 		bin="${HOME}/bin"
 		dst="${bin}/${src}"
+
+		if [[ ! "$PATH" =~ "$bin" ]]; then
+			echo 'PATH=$HOME/bin:$PATH' >> ~/.bashrc
+		fi
+
 	fi
 
 	echo "[+] Installing files..."
