@@ -117,7 +117,7 @@ def get_product_url():
         product_url (str):
             A valid url of the product entered by user.
     """
-    pattern = re.compile(r'^(https?://)?www.amazon.com(\.[a-z]{2})?/\S+')
+    pattern = re.compile(r'^(https?://(www\.)?|www\.)amazon\.com/\S+')
     prompt = 'Enter Amazon product url: '
     product_url = safe_input(prompt, pattern)
     return product_url
