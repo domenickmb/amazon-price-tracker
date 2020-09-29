@@ -20,7 +20,7 @@ def start_tracking():
     if not data:
         return
 
-    logger.info('Searching for product price')
+    logger.info('Inspecting product price')
     AmazonSpider.start_urls = [data['url']]
     item = AmazonItem()
     AmazonSpider.item = item
