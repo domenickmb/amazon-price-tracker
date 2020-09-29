@@ -63,7 +63,7 @@ def send_email(gmail, password, itemObj):
     except Exception:
         logger.error('Sending failed')
     else:
-        logger.info('A message was sent to your inbox. Please check it out.')
+        logger.info('Message has been sent. Please check your inbox.')
 
 
 def print_help():
