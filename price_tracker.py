@@ -9,6 +9,7 @@ from email.message import EmailMessage
 from amazon_spider import AmazonSpider
 from items import AmazonItem
 from config import read_config, initialize
+from logger import logger
 
 
 def start_tracking():
@@ -19,6 +20,7 @@ def start_tracking():
     if not data:
         return
 
+    logger.info('Searching for product price')
     AmazonSpider.start_urls = [data['url']]
     item = AmazonItem()
     AmazonSpider.item = item
@@ -27,7 +29,10 @@ def start_tracking():
     process.start()
 
     if float(item['product_price']) <= float(data['target_price']):
+        logger.info(f"Price dropped to {item['product_price']}")
         send_email(data['gmail'], data['password'], item)
+    else:
+        logger.info(f"Current price is {item['product_price']}")
 
 
 def send_email(gmail, password, itemObj):
@@ -50,9 +55,15 @@ def send_email(gmail, password, itemObj):
            f"Please visit {itemObj['product_url']}"
     msg.set_content(body)
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login(gmail, password)
-        smtp.send_message(msg)
+    try:
+        logger.info(f'Sending a notification to {gmail}')
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+            smtp.login(gmail, password)
+            smtp.send_message(msg)
+    except Exception:
+        logger.error('Sending failed')
+    else:
+        logger.info('A message was sent to your inbox. Please check it out.')
 
 
 def print_help():
