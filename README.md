@@ -10,10 +10,10 @@ A web scraper in Python 3 that tracks the price of a product on [Amazon](http://
 ### Requirements
 
 * Do only one of the following:
-   1. [Allow Less Secure Apps on your Google Account](https://myaccount.google.com/lesssecureapps)
-   2. [Enable Two-Factor Authentication](https://www.google.com/landing/2step/), and generate a new app password (**recommended**)
+   * [Allow Less Secure Apps on your Google Account](https://myaccount.google.com/lesssecureapps)
+   * [Enable Two-Factor Authentication](https://www.google.com/landing/2step/), and [generate a new app password](https://myaccount.google.com/apppasswords) (**recommended**)
 * A linux system with crond daemon enabled and running:
-  * `$ systemctl enable crond.service; systemctl start crond.service`
+  * `$ systemctl enable --now crond.service`
 
 * Python 3 is installed on the system
 * Install pip (use your package manager)
@@ -59,11 +59,9 @@ Enter your target price [should be greater than 0]:
 $ price_tracker start
 ```
 ### Adding the program to crontab  
-The command above only checks the price once and sends you an email if the target price was met. To enable real tracking, you should schedule the program with crontab.  
+The command above only checks the price once and sends you an email if the target price was met. To enable real-time tracking, you should schedule the program with crontab.  
 
-Edit your crontab file: `$ crontab -e`
-
-Add the line below. This will make the price_tracker run every hour. See `man 5 crontab` for more information.
+Edit your crontab file: `$ crontab -e` and add the line below. This will make the price_tracker run every hour. See `man 5 crontab` for more information.
 
 ```
 0 * * * *  ~/bin/price_tracker start
